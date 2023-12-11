@@ -11,4 +11,14 @@ app.get("/", (req, res) => {
     res.status(200).json({ msg: "Bem vindo a nossa API." });
 });
 
-app.listen(3000);
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASS;
+
+mongoose
+    // eslint-disable-next-line quotes
+    .connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.w4y8lsa.mongodb.net/`)
+    .then(() => {
+        app.listen(3000);
+        console.log("Conexão bem-sucedida!");
+    })
+    .catch((err) => console.log(err));
